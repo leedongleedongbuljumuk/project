@@ -1,1 +1,327 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerBridge 발표 슬라이드</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
 
+        :root {
+            --bg-cream: #fffdf9;
+            --point-orange: #ff7a59;
+            --point-mint: #6bd2b7;
+            --point-yellow: #ffd269;
+            --text-dark: #2d3748;
+            --text-gray: #718096;
+            --card-bg: #ffffff;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            background-color: #f0f2f5; 
+            font-family: 'Gowun Dodum', 'Pretendard', sans-serif;
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .slide-container {
+            width: 1000px;
+            height: 562.5px;
+            background-color: var(--bg-cream);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            display: none;
+            padding: 50px;
+        }
+
+        .slide-container.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px dashed var(--point-yellow);
+            padding-bottom: 15px;
+        }
+
+        .slide-badge {
+            background-color: var(--point-mint);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .slide-title {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            font-weight: bold;
+        }
+
+        .slide-content {
+            flex-grow: 1;
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .info-card {
+            background: var(--card-bg);
+            border: 3px solid var(--text-dark);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 5px 5px 0px var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .card-tag {
+            display: inline-block;
+            background-color: #fff0ea;
+            color: var(--point-orange);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            align-self: flex-start;
+        }
+
+        h3 { font-size: 1.3rem; color: var(--point-orange); }
+        p, li { font-size: 1.05rem; line-height: 1.6; color: var(--text-dark); list-style: none; }
+        
+        .cover-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+            gap: 20px;
+        }
+
+        .cover-title {
+            font-size: 2.4rem;
+            font-weight: bold;
+            line-height: 1.4;
+            color: var(--text-dark);
+        }
+        
+        .cover-title span {
+            color: var(--point-orange);
+            border-bottom: 5px solid var(--point-yellow);
+        }
+
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn {
+            background-color: var(--text-dark);
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 12px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-family: 'Gowun Dodum', sans-serif;
+            font-weight: bold;
+            transition: transform 0.1s;
+        }
+
+        .btn:active { transform: scale(0.95); }
+        .page-indicator { font-size: 1.1rem; font-weight: bold; color: var(--text-dark); }
+
+        .demo-box {
+            background-color: #effaf6;
+            border: 3px dashed var(--point-mint);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            grid-column: 1 / -1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. 표지 슬라이드 -->
+    <div class="slide-container active" id="slide-0">
+        <div class="cover-slide">
+            <div class="slide-badge" style="background-color: var(--point-orange);">✨ 생기부 탐구 활동</div>
+            <h1 class="cover-title">회사랑 내 생각이 딱 맞을까?<br><span>가치관으로 찾는 똑똑한 구직 사이트</span></h1>
+            <p style="font-size: 1.2rem; color: var(--text-gray); margin-top: 10px;">- CareerBridge 플랫폼 개발 프로젝트 -</p>
+            <p style="font-weight: bold; margin-top: 20px; background: var(--point-yellow); padding: 5px 15px; border-radius: 20px;">발표자: [학년 / 반 / 이름]</p>
+        </div>
+    </div>
+
+    <!-- 2. 신규 추가: 플랫폼 소개 및 탄생 배경 -->
+    <div class="slide-container" id="slide-1">
+        <div class="slide-header">
+            <h2 class="slide-title">1. 프로젝트 소개 및 탄생 배경</h2>
+            <div class="slide-badge">서비스 개요</div>
+        </div>
+        <div class="slide-content">
+            <div class="info-card">
+                <span class="card-tag">🌱 탄생 배경</span>
+                <h3>"돈이 전부가 아닌 세대"</h3>
+                <p>요즘 우리 청년들은 단순히 연봉 높은 대기업만 바라보지 않아요. 나의 성장 가능성, 즐거운 사내 분위기, 그리고 저녁이 있는 삶(워라밸)을 훨씬 중요하게 생각합니다. 하지만 기존 구직 사이트들은 이런 청년들의 진짜 관심사를 담아내지 못하고 있어 이 서비스를 기획하게 되었습니다.</p>
+            </div>
+            <div class="info-card">
+                <span class="card-tag">🚀 CareerBridge란?</span>
+                <h3>"가치관 매칭 네트워크 플랫폼"</h3>
+                <p>커리어브릿지는 <b>구직자가 중시하는 가치관 키워드</b>와 <b>기업의 진짜 내면 정보</b>를 연결(Bridge)해 주는 똑똑한 웹 서비스입니다. 억지로 검사를 강요하지 않고 자유롭게 소통하다가, 원할 때 내 성향을 분석해 핏이 맞는 기업을 찾을 수 있는 열린 공간입니다.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. 왜 만들었을까? (공학적 목적) -->
+    <div class="slide-container" id="slide-2">
+        <div class="slide-header">
+            <h2 class="slide-title">2. 우리가 해결하고자 하는 본질적인 문제</h2>
+            <div class="slide-badge">탐구 목적</div>
+        </div>
+        <div class="slide-content">
+            <div class="info-card">
+                <span class="card-tag">🧐 정보의 비대칭성</span>
+                <h3>겉도는 정보는 이제 그만!</h3>
+                <p>회사가 제공하는 딱딱한 홍보 문구 외에, 구직자가 정말 궁금한 진짜 숨은 정보들은 꽁꽁 숨겨져 있습니다. 이러한 정보 격차 때문에 취업 후 금방 퇴사하는 안타까운 일이 반복됩니다.</p>
+            </div>
+            <div class="info-card">
+                <span class="card-tag">💡 데이터 미스매치 해소</span>
+                <h3>행복한 매칭을 지향합니다</h3>
+                <p>구직자가 지향하는 삶의 방향과 기업의 실제 근무 환경 데이터를 투명하게 매칭해 주어, 서로 실망하지 않고 오랫동안 함께 성장할 수 있는 지속 가능한 구직 생태계를 만듭니다.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. 어떻게 굴러가고 있을까? -->
+    <div class="slide-container" id="slide-3">
+        <div class="slide-header">
+            <h2 class="slide-title">3. 유저들이 만들고 있는 살아있는 생태계</h2>
+            <div class="slide-badge">실제 데이터 현황</div>
+        </div>
+        <div class="slide-content">
+            <div class="info-card">
+                <span class="card-tag">🏢 알짜배기 기업 정보 40개</span>
+                <h3>진짜 선배들의 솔직한 한 줄 평</h3>
+                <p>현재 사이트에는 청년들이 주목하는 <b>40개의 알짜 회사 정보</b>가 등록되어 있어요. 그냥 소개 글이 아니라, <b>"눈치 안 보고 칼퇴 가능해요"</b>처럼 실제로 일해본 선배들의 든든한 한 줄 평가들이 꽉 채워져 가치를 더합니다.</p>
+            </div>
+            <div class="info-card">
+                <span class="card-tag">💬 실시간 익명 대화 30개+</span>
+                <h3>시끌벅적하고 재밌는 소통 공간</h3>
+                <p>면접장에서 겪었던 황당하고 웃긴 이야기부터 진지한 취업 고민까지, <b>30개가 넘는 선배들의 생생한 익명 글</b>들이 올라와 있어요. 유저들이 댓글로 조언을 주고받으며 사이트가 24시간 활기차게 살아 움직입니다.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. 어떻게 만들었을까? -->
+    <div class="slide-container" id="slide-4">
+        <div class="slide-header">
+            <h2 class="slide-title">4. 매끄러운 화면을 위한 비밀 기술</h2>
+            <div class="slide-badge">컴퓨터공학 탐구 역량</div>
+        </div>
+        <div class="slide-content">
+            <div class="info-card">
+                <span class="card-tag">⚡ 깜빡임 없는 빠른 화면</span>
+                <h3>새로고침 없이 부드럽게 (동적 DOM)</h3>
+                <p>유저가 글을 쓰거나 댓글을 달 때, 웹페이지 전체가 새로고침되며 덜컥거리지 않아요. 자바스크립트 기술을 활용해 <b>바뀐 데이터 부분만 마법처럼 쏙 변경되는 부드러운 화면</b>을 만들었습니다.</p>
+            </div>
+            <div class="info-card">
+                <span class="card-tag">🧩 똑똑한 순서 정렬</span>
+                <h3>새 글은 무조건 맨 위로! (unshift 알고리즘)</h3>
+                <p>방금 올라온 소식을 유저들이 바로 볼 수 있도록, <b>새로운 글이 등록되면 실시간으로 게시판 가장 첫 번째 칸에 배치</b>되고, 댓글들이 글마다 꼬리에 꼬리를 물고 독립적으로 달리는 똑똑한 규칙(1:N 구조)을 짰습니다.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. 직접 보여드릴게요! -->
+    <div class="slide-container" id="slide-5">
+        <div class="slide-header">
+            <h2 class="slide-title">5. CareerBridge 진짜 작동 화면 보기</h2>
+            <div class="slide-badge">실시간 기능 시연</div>
+        </div>
+        <div class="slide-content">
+            <div class="demo-box">
+                <h2 style="color: var(--point-orange); font-size: 1.8rem;">💻 [ 지금부터 사이트 시연을 시작하겠습니다 ]</h2>
+                <p style="margin-top: 10px; font-size: 1.15rem; max-width: 700px;">
+                    준비된 <b>index.html</b> 브라우저 화면으로 전환하여, 유저들이 실제로 글을 올리고 댓글을 달며 소통하는 매끄러운 라이브 유저 인터랙션을 직접 보여드릴게요!
+                </p>
+                <div style="margin-top: 15px; font-weight: bold; color: var(--text-gray);">
+                    👉 가치관 테스트 선택하기 ➡️ 실시간 유머 글 올리기 ➡️ 댓글 달기 순서로 진행됩니다.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. 마무리와 미래 -->
+    <div class="slide-container" id="slide-6">
+        <div class="slide-header">
+            <h2 class="slide-title">6. 우리가 만들어낼 멋진 변화</h2>
+            <div class="slide-badge">결론 및 기대효과</div>
+        </div>
+        <div class="slide-content">
+            <div class="info-card">
+                <span class="card-tag">🌱 청년들에게 날개를</span>
+                <h3>정보의 벽을 허물다</h3>
+                <p>유저들의 솔직한 목소리(정성 데이터)와 어플의 매칭 점수(정량 데이터)가 합쳐져서, 청년들이 나에게 딱 맞는 좋은 회사를 스스로 고를 수 있는 <b>단단한 디딤돌</b>이 되어줍니다.</p>
+            </div>
+            <div class="info-card">
+                <span class="card-tag">🚀 앞으로 더 발전할 모습</span>
+                <h3>더 똑똑한 인공지능까지</h3>
+                <p>여기서 멈추지 않고, 앞으로는 <b>진짜 데이터베이스(DB)</b>를 연결해 수만 명의 유저를 수용하고, 나아가 <b>인공지능(AI)이 유저의 마음을 읽고 회사를 쏙쏙 추천해 주는 엔진</b>으로 멋지게 진화시킬 예정입니다!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 컨트롤러 영역 -->
+    <div class="controls">
+        <button class="btn" onclick="moveSlide(-1)">이전 슬라이드</button>
+        <span class="page-indicator" id="pageNav">1 / 7</span>
+        <button class="btn" style="background-color: var(--point-orange);" onclick="moveSlide(1)">다음 슬라이드</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 7;
+
+        function moveSlide(direction) {
+            document.getElementById(`slide-${currentSlide}`).classList.remove('active');
+            currentSlide += direction;
+            if (currentSlide < 0) currentSlide = 0;
+            if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+            
+            document.getElementById(`slide-${currentSlide}`).classList.add('active');
+            document.getElementById('pageNav').innerText = `${currentSlide + 1} / ${totalSlides}`;
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if(e.key === 'ArrowRight' || e.key === ' ') moveSlide(1);
+            if(e.key === 'ArrowLeft') moveSlide(-1);
+        });
+    </script>
+</body>
+</html>
