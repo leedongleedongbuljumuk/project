@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CareerBridge 발표 슬라이드</title>
+    <title>CareerBridge - 통합 발표 및 시연 플랫폼</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
@@ -16,22 +16,50 @@
             --text-dark: #2d3748;
             --text-gray: #718096;
             --card-bg: #ffffff;
+            --primary-color: #4f46e5;
+            --border-color: #e2e8f0;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        body { 
-            background-color: #f0f2f5; 
-            font-family: 'Gowun Dodum', 'Pretendard', sans-serif;
-            color: var(--text-dark);
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Gowun Dodum', 'Pretendard', sans-serif; }
+        body { background-color: #f0f2f5; color: var(--text-dark); overflow-x: hidden; }
+
+        /* 상단 모드 전환 탭 (발표용/시연용 바꾸기) */
+        .mode-switcher {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 50px;
+            background: var(--text-dark);
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            overflow-x: hidden;
+            align-items: center;
+            gap: 20px;
+            z-index: 9999;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .mode-btn {
+            background: none;
+            border: 2px solid #ffffff;
+            color: #ffffff;
+            padding: 4px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+        .mode-btn.active {
+            background: var(--point-yellow);
+            color: var(--text-dark);
+            border-color: var(--point-yellow);
         }
 
+        /* 메인 화면 배치 컨테이너 */
+        .view-section { display: none; margin-top: 50px; min-height: calc(100vh - 50px); }
+        .view-section.active { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+        /* ==========================================================================
+           [MODE 1] 귀여운 발표 슬라이드 스타일
+           ========================================================================== */
         .slide-container {
             width: 1000px;
             height: 562.5px;
@@ -43,270 +71,306 @@
             display: none;
             padding: 50px;
         }
+        .slide-container.active { display: flex; flex-direction: column; justify-content: space-between; }
+        .slide-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px dashed var(--point-yellow); padding-bottom: 15px; }
+        .slide-badge { background-color: var(--point-mint); color: white; padding: 6px 16px; border-radius: 30px; font-size: 0.9rem; font-weight: bold; }
+        .slide-title { font-size: 1.8rem; font-weight: bold; }
+        .slide-content { flex-grow: 1; margin-top: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .info-card { background: var(--card-bg); border: 3px solid var(--text-dark); border-radius: 15px; padding: 20px; box-shadow: 5px 5px 0px var(--text-dark); display: flex; flex-direction: column; gap: 12px; }
+        .card-tag { display: inline-block; background-color: #fff0ea; color: var(--point-orange); padding: 4px 10px; border-radius: 8px; font-size: 0.85rem; font-weight: bold; align-self: flex-start; }
+        .cover-slide { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; height: 100%; gap: 20px; }
+        .cover-title { font-size: 2.4rem; font-weight: bold; line-height: 1.4; }
+        .cover-title span { color: var(--point-orange); border-bottom: 5px solid var(--point-yellow); }
+        .slide-controls { margin-top: 20px; display: flex; gap: 15px; align-items: center; }
+        .slide-btn { background-color: var(--text-dark); color: white; border: none; padding: 10px 24px; border-radius: 12px; font-size: 1rem; cursor: pointer; font-weight: bold; }
+        .demo-box { background-color: #effaf6; border: 3px dashed var(--point-mint); border-radius: 15px; padding: 25px; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 15px; grid-column: 1 / -1; }
 
-        .slide-container.active {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .slide-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 3px dashed var(--point-yellow);
-            padding-bottom: 15px;
-        }
-
-        .slide-badge {
-            background-color: var(--point-mint);
-            color: white;
-            padding: 6px 16px;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: bold;
-        }
-
-        .slide-title {
-            font-size: 1.8rem;
-            color: var(--text-dark);
-            font-weight: bold;
-        }
-
-        .slide-content {
-            flex-grow: 1;
-            margin-top: 30px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
-
-        .info-card {
-            background: var(--card-bg);
-            border: 3px solid var(--text-dark);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 5px 5px 0px var(--text-dark);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .card-tag {
-            display: inline-block;
-            background-color: #fff0ea;
-            color: var(--point-orange);
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            align-self: flex-start;
-        }
-
-        h3 { font-size: 1.3rem; color: var(--point-orange); }
-        p, li { font-size: 1.05rem; line-height: 1.6; color: var(--text-dark); list-style: none; }
+        /* ==========================================================================
+           [MODE 2] 실제 유저들이 쓰는 살아 움직이는 웹 사이트 구현 (시연용)
+           ========================================================================== */
+        .site-body { width: 100%; max-width: 1300px; padding: 2rem 1rem; display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; }
+        .site-header-bar { background-color: white; border-bottom: 1px solid var(--border-color); width: 100%; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .site-logo { font-size: 1.5rem; font-weight: 800; color: var(--primary-color); }
         
-        .cover-slide {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            height: 100%;
-            gap: 20px;
-        }
-
-        .cover-title {
-            font-size: 2.4rem;
-            font-weight: bold;
-            line-height: 1.4;
-            color: var(--text-dark);
-        }
+        .site-banner { grid-column: 1 / -1; background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: white; padding: 2rem; border-radius: 1rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 15px rgba(79, 70, 229, 0.1); }
+        .site-banner-btn { background: white; color: var(--primary-color); padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: bold; border: none; cursor: pointer; }
         
-        .cover-title span {
-            color: var(--point-orange);
-            border-bottom: 5px solid var(--point-yellow);
-        }
+        .section-title { font-size: 1.25rem; font-weight: bold; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; color: var(--text-dark); }
+        .company-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .company-card { background: white; border: 1px solid var(--border-color); border-radius: 0.75rem; padding: 1.25rem; transition: transform 0.2s; }
+        .company-card:hover { transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .company-header { display: flex; justify-content: space-between; align-items: start; }
+        .match-badge { background: #e0e7ff; color: var(--primary-color); padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.8rem; font-weight: bold; }
+        .company-tag { display: inline-block; background: #f1f5f9; color: var(--text-gray); padding: 0.1rem 0.4rem; border-radius: 0.25rem; font-size: 0.75rem; margin-right: 0.25rem; margin-top: 0.5rem; }
+        .company-review { margin-top: 0.75rem; font-size: 0.85rem; color: #475569; background: #f8fafc; padding: 0.5rem; border-radius: 0.25rem; border-left: 3px solid #cbd5e1; }
 
-        .controls {
-            margin-top: 20px;
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
+        .write-box { background: white; border: 1px solid var(--border-color); border-radius: 0.75rem; padding: 1.25rem; margin-bottom: 1.5rem; }
+        .write-input, .write-textarea { width: 100%; border: 1px solid var(--border-color); padding: 0.75rem; border-radius: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem; }
+        .write-textarea { min-height: 80px; resize: none; }
+        .write-btn { background: var(--primary-color); color: white; border: none; padding: 0.5rem 1.25rem; border-radius: 0.5rem; font-weight: bold; cursor: pointer; float: right; }
+        
+        .post-card { background: white; border: 1px solid var(--border-color); border-radius: 0.75rem; padding: 1.25rem; margin-bottom: 0.75rem; }
+        .post-meta { font-size: 0.8rem; color: var(--text-gray); margin-bottom: 0.4rem; }
+        .post-title { font-weight: bold; font-size: 1rem; margin-bottom: 0.4rem; }
+        .post-desc { font-size: 0.9rem; color: #475569; margin-bottom: 0.75rem; white-space: pre-line; }
+        
+        .comment-btn { font-size: 0.8rem; color: var(--primary-color); cursor: pointer; background: #f0f2ff; padding: 0.25rem 0.6rem; border-radius: 0.25rem; display: inline-block; font-weight: bold; }
+        .comment-section { margin-top: 0.75rem; border-top: 1px dashed var(--border-color); padding-top: 0.75rem; }
+        .comment-item { font-size: 0.85rem; background: #f8fafc; padding: 0.4rem 0.75rem; border-radius: 0.35rem; margin-bottom: 0.4rem; }
+        .comment-item span { font-weight: bold; color: #475569; margin-right: 0.5rem; }
+        .comment-form { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+        .comment-input { flex-grow: 1; border: 1px solid var(--border-color); padding: 0.35rem 0.5rem; border-radius: 0.25rem; font-size: 0.85rem; }
+        .comment-submit { background: #64748b; color: white; border: none; padding: 0.35rem 0.75rem; border-radius: 0.25rem; cursor: pointer; font-size: 0.85rem; }
 
-        .btn {
-            background-color: var(--text-dark);
-            color: white;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 12px;
-            font-size: 1rem;
-            cursor: pointer;
-            font-family: 'Gowun Dodum', sans-serif;
-            font-weight: bold;
-            transition: transform 0.1s;
-        }
-
-        .btn:active { transform: scale(0.95); }
-        .page-indicator { font-size: 1.1rem; font-weight: bold; color: var(--text-dark); }
-
-        .demo-box {
-            background-color: #effaf6;
-            border: 3px dashed var(--point-mint);
-            border-radius: 15px;
-            padding: 25px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            grid-column: 1 / -1;
-        }
+        .ranking-box { background: white; border: 1px solid var(--border-color); border-radius: 1rem; padding: 1.5rem; position: sticky; top: 70px; }
+        .ranking-item { display: flex; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid #f1f5f9; }
+        .ranking-num { font-weight: 800; color: var(--primary-color); width: 1.5rem; }
+        
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 10000; }
+        .modal-content { background: white; padding: 2.5rem; border-radius: 1rem; max-width: 500px; width: 90%; text-align: center; }
+        .modal-close { background: var(--primary-color); color: white; padding: 0.5rem 1.5rem; border: none; border-radius: 0.5rem; cursor: pointer; margin-top: 1.5rem; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <!-- 1. 표지 슬라이드 -->
-    <div class="slide-container active" id="slide-0">
-        <div class="cover-slide">
-            <div class="slide-badge" style="background-color: var(--point-orange);">✨ 생기부 탐구 활동</div>
-            <h1 class="cover-title">회사랑 내 생각이 딱 맞을까?<br><span>가치관으로 찾는 똑똑한 구직 사이트</span></h1>
-            <p style="font-size: 1.2rem; color: var(--text-gray); margin-top: 10px;">- CareerBridge 플랫폼 개발 프로젝트 -</p>
-            <p style="font-weight: bold; margin-top: 20px; background: var(--point-yellow); padding: 5px 15px; border-radius: 20px;">발표자: [학년 / 반 / 이름]</p>
-        </div>
+    <!-- 고정 메뉴바: 언제든 발표창과 구현 사이트를 오갈 수 있음 -->
+    <div class="mode-switcher">
+        <button class="mode-btn active" id="btn-presentation" onclick="switchMode('presentation')">📊 슬라이드 발표 모드</button>
+        <button class="mode-btn" id="btn-live" onclick="switchMode('live')">💻 실시간 플랫폼 시연 모드</button>
     </div>
 
-    <!-- 2. 신규 추가: 플랫폼 소개 및 탄생 배경 -->
-    <div class="slide-container" id="slide-1">
-        <div class="slide-header">
-            <h2 class="slide-title">1. 프로젝트 소개 및 탄생 배경</h2>
-            <div class="slide-badge">서비스 개요</div>
-        </div>
-        <div class="slide-content">
-            <div class="info-card">
-                <span class="card-tag">🌱 탄생 배경</span>
-                <h3>"돈이 전부가 아닌 세대"</h3>
-                <p>요즘 우리 청년들은 단순히 연봉 높은 대기업만 바라보지 않아요. 나의 성장 가능성, 즐거운 사내 분위기, 그리고 저녁이 있는 삶(워라밸)을 훨씬 중요하게 생각합니다. 하지만 기존 구직 사이트들은 이런 청년들의 진짜 관심사를 담아내지 못하고 있어 이 서비스를 기획하게 되었습니다.</p>
-            </div>
-            <div class="info-card">
-                <span class="card-tag">🚀 CareerBridge란?</span>
-                <h3>"가치관 매칭 네트워크 플랫폼"</h3>
-                <p>커리어브릿지는 <b>구직자가 중시하는 가치관 키워드</b>와 <b>기업의 진짜 내면 정보</b>를 연결(Bridge)해 주는 똑똑한 웹 서비스입니다. 억지로 검사를 강요하지 않고 자유롭게 소통하다가, 원할 때 내 성향을 분석해 핏이 맞는 기업을 찾을 수 있는 열린 공간입니다.</p>
+    <!-- ==========================================
+         [MODE 1] 발표 슬라이드 파트
+         ========================================== -->
+    <section class="view-section active" id="section-presentation">
+        <!-- 1. 표지 -->
+        <div class="slide-container active" id="slide-0">
+            <div class="cover-slide">
+                <div class="slide-badge" style="background-color: var(--point-orange);">✨ 생기부 학술 탐구</div>
+                <h1 class="cover-title">회사랑 내 생각이 딱 맞을까?<br><span>가치관으로 찾는 똑똑한 구직 사이트</span></h1>
+                <p style="font-size: 1.2rem; color: var(--text-gray);">CareerBridge 플랫폼 개발 및 데이터 생태계 검증</p>
+                <p style="font-weight: bold; background: var(--point-yellow); padding: 5px 15px; border-radius: 20px;">발표자: [학년 / 반 / 이름]</p>
             </div>
         </div>
-    </div>
 
-    <!-- 3. 왜 만들었을까? (공학적 목적) -->
-    <div class="slide-container" id="slide-2">
-        <div class="slide-header">
-            <h2 class="slide-title">2. 우리가 해결하고자 하는 본질적인 문제</h2>
-            <div class="slide-badge">탐구 목적</div>
-        </div>
-        <div class="slide-content">
-            <div class="info-card">
-                <span class="card-tag">🧐 정보의 비대칭성</span>
-                <h3>겉도는 정보는 이제 그만!</h3>
-                <p>회사가 제공하는 딱딱한 홍보 문구 외에, 구직자가 정말 궁금한 진짜 숨은 정보들은 꽁꽁 숨겨져 있습니다. 이러한 정보 격차 때문에 취업 후 금방 퇴사하는 안타까운 일이 반복됩니다.</p>
+        <!-- 2. 탄생 배경 -->
+        <div class="slide-container" id="slide-1">
+            <div class="slide-header">
+                <h2 class="slide-title">1. 프로젝트 소개 및 탄생 배경</h2>
+                <div class="slide-badge">서비스 개요</div>
             </div>
-            <div class="info-card">
-                <span class="card-tag">💡 데이터 미스매치 해소</span>
-                <h3>행복한 매칭을 지향합니다</h3>
-                <p>구직자가 지향하는 삶의 방향과 기업의 실제 근무 환경 데이터를 투명하게 매칭해 주어, 서로 실망하지 않고 오랫동안 함께 성장할 수 있는 지속 가능한 구직 생태계를 만듭니다.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- 4. 어떻게 굴러가고 있을까? -->
-    <div class="slide-container" id="slide-3">
-        <div class="slide-header">
-            <h2 class="slide-title">3. 유저들이 만들고 있는 살아있는 생태계</h2>
-            <div class="slide-badge">실제 데이터 현황</div>
-        </div>
-        <div class="slide-content">
-            <div class="info-card">
-                <span class="card-tag">🏢 알짜배기 기업 정보 40개</span>
-                <h3>진짜 선배들의 솔직한 한 줄 평</h3>
-                <p>현재 사이트에는 청년들이 주목하는 <b>40개의 알짜 회사 정보</b>가 등록되어 있어요. 그냥 소개 글이 아니라, <b>"눈치 안 보고 칼퇴 가능해요"</b>처럼 실제로 일해본 선배들의 든든한 한 줄 평가들이 꽉 채워져 가치를 더합니다.</p>
-            </div>
-            <div class="info-card">
-                <span class="card-tag">💬 실시간 익명 대화 30개+</span>
-                <h3>시끌벅적하고 재밌는 소통 공간</h3>
-                <p>면접장에서 겪었던 황당하고 웃긴 이야기부터 진지한 취업 고민까지, <b>30개가 넘는 선배들의 생생한 익명 글</b>들이 올라와 있어요. 유저들이 댓글로 조언을 주고받으며 사이트가 24시간 활기차게 살아 움직입니다.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- 5. 어떻게 만들었을까? -->
-    <div class="slide-container" id="slide-4">
-        <div class="slide-header">
-            <h2 class="slide-title">4. 매끄러운 화면을 위한 비밀 기술</h2>
-            <div class="slide-badge">컴퓨터공학 탐구 역량</div>
-        </div>
-        <div class="slide-content">
-            <div class="info-card">
-                <span class="card-tag">⚡ 깜빡임 없는 빠른 화면</span>
-                <h3>새로고침 없이 부드럽게 (동적 DOM)</h3>
-                <p>유저가 글을 쓰거나 댓글을 달 때, 웹페이지 전체가 새로고침되며 덜컥거리지 않아요. 자바스크립트 기술을 활용해 <b>바뀐 데이터 부분만 마법처럼 쏙 변경되는 부드러운 화면</b>을 만들었습니다.</p>
-            </div>
-            <div class="info-card">
-                <span class="card-tag">🧩 똑똑한 순서 정렬</span>
-                <h3>새 글은 무조건 맨 위로! (unshift 알고리즘)</h3>
-                <p>방금 올라온 소식을 유저들이 바로 볼 수 있도록, <b>새로운 글이 등록되면 실시간으로 게시판 가장 첫 번째 칸에 배치</b>되고, 댓글들이 글마다 꼬리에 꼬리를 물고 독립적으로 달리는 똑똑한 규칙(1:N 구조)을 짰습니다.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- 6. 직접 보여드릴게요! -->
-    <div class="slide-container" id="slide-5">
-        <div class="slide-header">
-            <h2 class="slide-title">5. CareerBridge 진짜 작동 화면 보기</h2>
-            <div class="slide-badge">실시간 기능 시연</div>
-        </div>
-        <div class="slide-content">
-            <div class="demo-box">
-                <h2 style="color: var(--point-orange); font-size: 1.8rem;">💻 [ 지금부터 사이트 시연을 시작하겠습니다 ]</h2>
-                <p style="margin-top: 10px; font-size: 1.15rem; max-width: 700px;">
-                    준비된 <b>index.html</b> 브라우저 화면으로 전환하여, 유저들이 실제로 글을 올리고 댓글을 달며 소통하는 매끄러운 라이브 유저 인터랙션을 직접 보여드릴게요!
-                </p>
-                <div style="margin-top: 15px; font-weight: bold; color: var(--text-gray);">
-                    👉 가치관 테스트 선택하기 ➡️ 실시간 유머 글 올리기 ➡️ 댓글 달기 순서로 진행됩니다.
+            <div class="slide-content">
+                <div class="info-card">
+                    <span class="card-tag">🌱 왜 시작했을까?</span>
+                    <h3>"돈 이상의 가치를 찾는 청년들"</h3>
+                    <p>요즘 우리들은 무조건 높은 연봉만 주는 딱딱한 회사를 원하지 않아요. 개인의 성장, 자유로운 사내 문화, 그리고 저녁이 있는 삶인 '워라밸'을 더욱 중요시합니다. 하지만 기존 구직 포털은 광고비 순 정렬과 연봉 숫자만 제공하고 있어 이 아이디어를 시작했습니다.</p>
+                </div>
+                <div class="info-card">
+                    <span class="card-tag">🚀 CareerBridge란?</span>
+                    <h3>"가치관 연결 네트워크 공간"</h3>
+                    <p>구직자가 중시하는 삶의 가치관 키워드와 숨겨진 중소·강소기업의 진짜 내부 문화를 직접 연결해 주는 유저 참여형 웹 서비스입니다. 정보의 비대칭성을 해결하고 행복한 취업 매칭을 목표로 합니다.</p>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- 7. 마무리와 미래 -->
-    <div class="slide-container" id="slide-6">
-        <div class="slide-header">
-            <h2 class="slide-title">6. 우리가 만들어낼 멋진 변화</h2>
-            <div class="slide-badge">결론 및 기대효과</div>
-        </div>
-        <div class="slide-content">
-            <div class="info-card">
-                <span class="card-tag">🌱 청년들에게 날개를</span>
-                <h3>정보의 벽을 허물다</h3>
-                <p>유저들의 솔직한 목소리(정성 데이터)와 어플의 매칭 점수(정량 데이터)가 합쳐져서, 청년들이 나에게 딱 맞는 좋은 회사를 스스로 고를 수 있는 <b>단단한 디딤돌</b>이 되어줍니다.</p>
+        <!-- 3. 목적 및 문제 정의 -->
+        <div class="slide-container" id="slide-2">
+            <div class="slide-header">
+                <h2 class="slide-title">2. 우리가 해결하고자 하는 본질적인 문제</h2>
+                <div class="slide-badge">탐구 목적</div>
             </div>
-            <div class="info-card">
-                <span class="card-tag">🚀 앞으로 더 발전할 모습</span>
-                <h3>더 똑똑한 인공지능까지</h3>
-                <p>여기서 멈추지 않고, 앞으로는 <b>진짜 데이터베이스(DB)</b>를 연결해 수만 명의 유저를 수용하고, 나아가 <b>인공지능(AI)이 유저의 마음을 읽고 회사를 쏙쏙 추천해 주는 엔진</b>으로 멋지게 진화시킬 예정입니다!</p>
+            <div class="slide-content">
+                <div class="info-card">
+                    <span class="card-tag">🧐 정보의 비대칭성 해소</span>
+                    <h3>회사의 진짜 속사정 공유</h3>
+                    <p>겉포장식 기업 정보에서 벗어나, '정말로 칼퇴를 할 수 있는지', '수평적인 소통이 오가는지'를 솔직하게 투명하게 공유할 수 있는 열린 정보망의 장을 공학적으로 마련하고자 했습니다.</p>
+                </div>
+                <div class="info-card">
+                    <span class="card-tag">💡 일자리 미스매치 차단</span>
+                    <h3>행복하고 오래가는 커리어 매칭</h3>
+                    <p>구직자와 기업의 생각 차이를 미연에 방지하여 입사 후 조기 퇴사하는 안타까운 사회적 비용과 청년들의 좌절을 소프트웨어 기술로 줄여나가고자 했습니다.</p>
+                </div>
             </div>
+        </div>
+
+        <!-- 4. 살아있는 실제 생태계 강조 -->
+        <div class="slide-container" id="slide-3">
+            <div class="slide-header">
+                <h2 class="slide-title">3. 유저들의 참여로 완성된 살아있는 생태계</h2>
+                <div class="slide-badge">실제 유저 데이터 현황</div>
+            </div>
+            <div class="slide-content">
+                <div class="info-card">
+                    <span class="card-tag">🏢 선배들의 생생한 한 줄 평</span>
+                    <h3>40개의 유망 강소기업 정보</h3>
+                    <p>현재 사이트에는 선배들이 엄선한 40개의 실제 회사가 입점해 있으며, <b>"눈치 안 보는 유연근무제가 정말 꿀이다"</b> 등 생생하게 살아 숨 쉬는 솔직한 내부 평가가 연동되어 작동 중입니다.</p>
+                </div>
+                <div class="info-card">
+                    <span class="card-tag">🔥 자유로운 소통과 피드백</span>
+                    <h3>30개 이상의 실시간 대화 데이터</h3>
+                    <p>면접장 유머 썰, 첫 출근 빌런 썰 등 청년들이 깊게 공감하고 웃을 수 있는 이야기와 익명 고민글 30여 개가 넘치고 있으며, 유저들이 대댓글로 활발하게 피드백을 주고받는 집단지성 생태계입니다.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. 핵심 구현 기술 -->
+        <div class="slide-container" id="slide-4">
+            <div class="slide-header">
+                <h2 class="slide-title">4. 매끄러운 소통을 보장하는 화면 기술</h2>
+                <div class="slide-badge">컴퓨터공학 탐구 역량</div>
+            </div>
+            <div class="slide-content">
+                <div class="info-card">
+                    <span class="card-tag">⚡ 비동기적 UI 변화</span>
+                    <h3>새로고침 없이 실시간 갱신 (동적 DOM)</h3>
+                    <p>글이나 댓글을 등록할 때 화면 전체가 흰색으로 깜빡이며 멈추는 일 없이, 자바스크립트를 활용해 유저가 행동한 부분의 정보만 마법처럼 즉시 쏙 갱신되도록 처리했습니다.</p>
+                </div>
+                <div class="info-card">
+                    <span class="card-tag">🧩 데이터 재정렬 및 구조화</span>
+                    <h3>unshift 정렬 및 1:N 맵핑</h3>
+                    <p>방금 올라온 따끈따끈한 새 글이 실시간으로 최상단 배열에 올라가는 정렬 로직과, 각 게시글의 인덱스를 안전하게 묶어 글마다 독립적으로 수많은 댓글이 뻗어 나가는 효율적인 1:N 데이터 알고리즘을 짰습니다.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. 시연 유도 -->
+        <div class="slide-container" id="slide-5">
+            <div class="slide-header">
+                <h2 class="slide-title">5. CareerBridge 진짜 작동 화면 보기</h2>
+                <div class="slide-badge">실시간 기능 시연</div>
+            </div>
+            <div class="slide-content">
+                <div class="demo-box">
+                    <h2 style="color: var(--point-orange); font-size: 1.8rem;">💻 [ 상단의 시연 모드 탭을 클릭해 주세요! ]</h2>
+                    <p style="margin-top: 10px; font-size: 1.15rem; max-width: 700px;">
+                        이제 상단의 <b>'실시간 플랫폼 시연 모드'</b> 탭을 눌러 유저들이 실제로 글을 올리고 대댓글을 달며 활기차게 상호작용하는 솔루션의 진짜 실체를 눈으로 확인시켜 드리겠습니다!
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. 결론 및 기대효과 -->
+        <div class="slide-container" id="slide-6">
+            <div class="slide-header">
+                <h2 class="slide-title">6. 우리가 만들어낼 멋진 미래</h2>
+                <div class="slide-badge">결론 및 기대효과</div>
+            </div>
+            <div class="slide-content">
+                <div class="info-card">
+                    <span class="card-tag">🌱 정보의 민주화</span>
+                    <h3>미스매치 문제 해결의 돌파구</h3>
+                    <p>선배들의 유머러스하고 솔직한 후기(정성)와 수치화된 가치관 매칭율(정량)이 조화롭게 결합해, 청년이 직접 일자리를 주도적으로 검증하는 든든한 커리어 가이드라인을 완성했습니다.</p>
+                </div>
+                <div class="info-card">
+                    <span class="card-tag">🚀 기술 고도화 방향</span>
+                    <h3>인공지능 추천 엔진 연계</h3>
+                    <p>앞으로는 실제 외부 데이터베이스(DB) 서버를 확실하게 연동하고, 인공지능(AI)을 활용하여 구직자의 일상적 대화 분석을 토대로 가장 가치관이 알맞은 숨은 알짜 기업을 추천하는 서비스로 더 크게 발전시키겠습니다.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 슬라이드 조작기 -->
+        <div class="slide-controls">
+            <button class="slide-btn" onclick="moveSlide(-1)">◀ 이전 슬라이드</button>
+            <span class="page-indicator" id="pageNav">1 / 7</span>
+            <button class="slide-btn" style="background-color: var(--point-orange);" onclick="moveSlide(1)">다음 슬라이드 ▶</button>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         [MODE 2] 실제 사용 가능한 살아있는 사이트 파트 (유저 데이터 가득 포함)
+         ========================================== -->
+    <section class="view-section" id="section-live">
+        <div class="site-header-bar">
+            <div class="site-logo">🚀 CareerBridge</div>
+            <div style="color: var(--text-gray); font-size: 0.9rem;">청년 중심 가치관 매칭 커뮤니티</div>
+        </div>
+
+        <div class="site-body">
+            <!-- 상단 매칭 배너 -->
+            <div class="site-banner">
+                <div>
+                    <h2 style="font-size: 1.6rem; margin-bottom: 0.5rem;">내 가치관에 딱! 맞는 알짜 회사 찾기</h2>
+                    <p>간단한 키워드 검사로 수많은 기업 정보와 내 가치관 싱크로율을 실시간 비교해 보세요.</p>
+                </div>
+                <button class="site-banner-btn" onclick="openModal()">성향 분석 시작하기</button>
+            </div>
+
+            <!-- 왼쪽 영역 (기업 리스트 + 실시간 광장) -->
+            <div style="display: flex; flex-direction: column; gap: 2rem;">
+                
+                <!-- 40개 기업 탐색 -->
+                <div>
+                    <div class="section-title">🌟 유저들이 평가한 기업 정보 리스트 (40개 전체)</div>
+                    <div class="company-grid" id="companyContainer"></div>
+                </div>
+
+                <!-- 실시간 익명 대화방 -->
+                <div>
+                    <div class="section-title">🔥 실시간 청년/학생 익명 광장 (30개 활성 중)</div>
+                    
+                    <!-- 내 글쓰기 창 -->
+                    <div class="write-box">
+                        <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--point-orange);"✍️ 지금 내 생각이나 유머 글 공유하기</h4>
+                        <input type="text" id="newTitle" class="write-input" placeholder="제목을 입력하세요 (예: 면접 레전드 썰 푼다)">
+                        <textarea id="newDesc" class="write-textarea" placeholder="취준 고민, 웃긴 에피소드, 회사 꿀팁 등 자유롭게 작성하면 실시간 광장에 즉시 나타납니다!"></textarea>
+                        <button class="write-btn" onclick="addPost()">게시글 실시간 등록</button>
+                        <div style="clear:both;"></div>
+                    </div>
+
+                    <!-- 게시글 목록 공간 -->
+                    <div id="postContainer"></div>
+                </div>
+
+            </div>
+
+            <!-- 오른쪽 영역 (사이드바 TOP 10) -->
+            <div>
+                <div class="ranking-box">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--text-dark);">🏆 워라밸/사내문화 부문 청년 선호도 👑 TOP 10</h3>
+                    <div id="topTenContainer"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 매칭 모달 팝업 -->
+    <div class="modal" id="testModal">
+        <div class="modal-content">
+            <h2 style="font-size: 1.4rem; margin-bottom: 1rem;">🧩 내 가치관 매칭 테스트</h2>
+            <p style="color: var(--text-gray); margin-bottom: 1.5rem; font-size: 0.95rem;">직장을 고를 때 절대 양보할 수 없는 나의 핵심 조건은?</p>
+            <div style="display: flex; flex-direction: column; gap: 0.6rem; text-align: left; margin-bottom: 1rem;">
+                <label><input type="radio" name="val" checked> 야근 탈출! 확실한 개인 시간과 워라밸 보장</label>
+                <label><input type="radio" name="val"> 직급 떼고 소통하는 자유롭고 유연한 수평 문화</label>
+                <label><input type="radio" name="val"> 나의 능력을 폭발적으로 키울 수 있는 성장 인프라</label>
+                <label><input type="radio" name="val"> 일한 만큼 확실히 돌려받는 강력한 보상과 연봉체계</label>
+            </div>
+            <button class="modal-close" onclick="closeModal()">매칭 엔진 가동하기</button>
         </div>
     </div>
 
-    <!-- 컨트롤러 영역 -->
-    <div class="controls">
-        <button class="btn" onclick="moveSlide(-1)">이전 슬라이드</button>
-        <span class="page-indicator" id="pageNav">1 / 7</span>
-        <button class="btn" style="background-color: var(--point-orange);" onclick="moveSlide(1)">다음 슬라이드</button>
-    </div>
-
+    <!-- 데이터 주입 및 화면 조작 스크립트 -->
     <script>
+        // ==========================================
+        // [1] 모드 및 슬라이드 스위칭 시스템
+        // ==========================================
         let currentSlide = 0;
         const totalSlides = 7;
+
+        function switchMode(mode) {
+            document.getElementById('section-presentation').classList.remove('active');
+            document.getElementById('section-live').classList.remove('active');
+            document.getElementById('btn-presentation').classList.remove('active');
+            document.getElementById('btn-live').classList.remove('active');
+
+            if(mode === 'presentation') {
+                document.getElementById('section-presentation').classList.add('active');
+                document.getElementById('btn-presentation').classList.add('active');
+            } else {
+                document.getElementById('section-live').classList.add('active');
+                document.getElementById('btn-live').classList.add('active');
+            }
+        }
 
         function moveSlide(direction) {
             document.getElementById(`slide-${currentSlide}`).classList.remove('active');
@@ -319,9 +383,165 @@
         }
 
         document.addEventListener('keydown', function(e) {
-            if(e.key === 'ArrowRight' || e.key === ' ') moveSlide(1);
-            if(e.key === 'ArrowLeft') moveSlide(-1);
+            if(document.getElementById('section-presentation').classList.contains('active')) {
+                if(e.key === 'ArrowRight' || e.key === ' ') moveSlide(1);
+                if(e.key === 'ArrowLeft') moveSlide(-1);
+            }
         });
+
+        // ==========================================
+        // [2] 40개 기업 및 30개 커뮤니티 데이터 빌딩
+        // ==========================================
+        const companyNames = [
+            "네오소프트", "그린텍인터내셔널", "브이원랩", "퓨처웨이브", "인포시스텍", "소프트마이닝", "클라우드브릭", "디지털하이브", 
+            "엔터프라이즈엑스", "모빌리티온", "에듀테크랩", "바이오시너지", "핀테크인사이트", "넥스트커머스", "스마트팩토리랩", "에코네트워크",
+            "크리에이티브웍스", "데이터마인드", "코딩테크", "사이버가드", "블록체인랩스", "미디어스톰", "헬스케어원", "로보틱스나우",
+            "유니버스소프트", "딥비전", "퀀트랩", "플랫폼베이스", "아이디어가든", "코드스미스", "웹디자인하우스", "게임크래프트",
+            "알고리즘웍스", "오픈소스네트워크", "지오테크", "퀀텀소프트", "제트소프트", "맥스레이팅", "시너지파트너스", "파이오니어랩"
+        ];
+        const tags = [["워라밸 최고", "자유로운 퇴근"], ["수평문화", "직급 없음"], ["성장 무한지원", "도서비무제한"], ["맛있는 식대제공", "상사 터치 없음"]];
+        const reviews = ["눈치 절대 안 보고 정시 칼퇴 가능한 신의 직장!", "대표님도 닉네임으로 부르는 진짜 수평적인 곳이에요.", "업무 강도는 살짝 있지만 내 역량이 폭발적으로 큽니다.", "금요일 조기 퇴근 제도가 있어서 삶의 질 상승함.", "기본 초봉 탄탄하고 직원 복지에 진심인 곳입니다."];
+
+        // 40개 기업 렌더링
+        let companyHtml = '';
+        for(let i=0; i<40; i++) {
+            companyHtml += `
+                <div class="company-card">
+                    <div class="company-header">
+                        <strong style="font-size:1.05rem;">(주)${companyNames[i]}</strong>
+                        <span class="match-badge">매칭율 ${99 - (i%15)}%</span>
+                    </div>
+                    <div><span class="company-tag">#${tags[i%4][0]}</span><span class="company-tag">#${tags[i%4][1]}</span></div>
+                    <div class="company-review">💬 "${reviews[i%5]}"</div>
+                </div>`;
+        }
+        document.getElementById('companyContainer').innerHTML = companyHtml;
+
+        // TOP 10 랭킹 빌드
+        let topTenHtml = '';
+        for(let i=0; i<10; i++) {
+            topTenHtml += `
+                <div class="ranking-item">
+                    <span class="ranking-num">${i+1}</span>
+                    <span style="flex-grow:1; font-size:0.95rem;">(주)${companyNames[i]}</span>
+                    <span style="font-size:0.85rem; color:var(--point-orange); font-weight:bold;">★ ${(4.9 - (i * 0.08)).toFixed(1)}</span>
+                </div>`;
+        }
+        document.getElementById('topTenContainer').innerHTML = topTenHtml;
+
+        // 30개 커뮤니티 데이터셋 구성 (웃긴 썰 2개 배치 및 일반글 28개 배열화)
+        let postsData = [
+            {
+                title: "🤣 중소기업 면접 레전드 썰 푼다 ㅋㅋㅋ",
+                desc: "면접관이 '야근 많아도 괜찮냐'길래 내가 너무 가고 싶어서 '네! 어차피 집구석에 박혀있어 봤자 할 일도 없는데 회사 복지 에어컨 쐬러 오고 싶었습니다' 하니까 면접관 빵 터지더니 합격 통보 날라옴ㅋㅋㅋㅋㅋㅋ 나 에어컨 도둑으로 눈도장 찍힌 거냐 이거?",
+                comments: ["익명선배: 님 내일부터 에어컨 온도 조절 관리자임 ㅋㅋㅋ", "구직중인대학생: 멘트 미쳤다 자소서에 써먹어야지"]
+            },
+            {
+                title: "🤦‍♂️ 출근 첫날 빌런 됨.. 퇴사각이냐?",
+                desc: "탕비실 냉장고에 엄청 맛있는 탕수육 소스 밀폐용기에 담겨있길래 공용인 줄 알고 탕수육 시켜서 싹 부어 먹었거든? 근데 그게 대표님이 집에서 공수해 온 개인 소스였음... 지나가다 싹 비워진 소스통 보시고 눈으로 욕하고 가셨는데 내일 사표 내야 하냐..?",
+                comments: ["익명1: 대표님 피눈물 흘리시겠네 ㅋㅋㅋ 고급 소스로 다시 사다 놔라", "취준러: 탕수육 소스로 첫날 도장 확실히 찍었네 화이팅"]
+            }
+        ];
+
+        const normalTitles = [
+            "요즘 청년들이 생각하는 워라밸 직장의 기준", "연봉 3500 집 앞 5분거리 vs 연봉 4500 왕복 3시간 대기업",
+            "자유 복장 회사면 진짜 추리닝 입고 출근해도 되나?", "면접장 분위기 쎄하면 무조건 도망치라는 법칙 증명함",
+            "결국 내 성향에 맞춰서 이직했더니 삶의 질이 달라짐", "자소서 쓸 때 '열정'이랑 '노력' 단어 안 쓰고 통과하는 법",
+            "중소 강소기업 평점 사이트 점수 어디까지 신뢰 가능?", "스타트업 인턴 3개월 하면서 느낀 솔직한 생태계 후기",
+            "첫 직장 이름값이 커리어에 미치는 영향력", "포트폴리오 예쁘게 구성하는 꿀팁 공유합니다",
+            "야근 수당 안 챙겨주는 블랙 기업 사전에 거르는 요령", "취업 준비 기간 길어지니까 자존감 무너지는데 극복 팁 있음?",
+            "지방에서 서울 상경 취업하면 월세 떼고 진짜 남는 게 있나요", "동아리랑 학과 활동 경험 자소서에 맛깔나게 녹이는 로직",
+            "오늘 면접 질문 제대로 대답 못 해서 우울한 밤이네", "회사 화장실 위생 상태가 회사의 수준을 대변한다는 주의",
+            "연봉 협상할 때 밀당 대차게 말아먹은 썰 ㅋㅋㅋ", "결국 돈보다 같이 일하는 사람이 좋은 게 최고라는 걸 깨달음",
+            "첫 출근할 때 가방에 필기구 외에 뭐 챙겨가야 됨?", "가치관 검사 돌렸는데 소름 돋게 내 성향 맞춰서 놀람",
+            "국비지원 교육 듣고 비전공자 IT 취업 현실 조언해 드림", "회사가 너무 조용해서 숨 막히는데 원래 분위기가 이런가요",
+            "복지 혜택 중에서 무제한 스낵바 혜택 실제로 체감 큼?", "이력서 사진 너무 보정하면 면접 때 감점 요인 됨?",
+            "팀원 전체가 일 안 하는 빌런일 때 멘탈 유지하는 방법", "재택근무 꿀 빨다가 다시 매일 출근하려니까 죽을 맛",
+            "면접 마지막 역질문 시간에 뭐 물어봐야 센스 있어 보임?", "강소기업 중 진짜 옥석 가려내는 나만의 필터링 기준"
+        ];
+
+        normalTitles.forEach((title, idx) => {
+            postsData.push({
+                title: title,
+                desc: "현직 선배들과 구직 청년들이 주도적으로 만들어가는 커리어브릿지 익명 광장 게시글입니다. 솔직하고 유쾌한 대화를 나누며 취업 미스매치를 우리 손으로 함께 허물어봅시다! 다들 취뽀 화이팅입니다!",
+                comments: ["익명선배: 격하게 공감하고 갑니다! 힘내세요.", "취준생: 좋은 글 정보 감사합니다."]
+            });
+        });
+
+        // 커뮤니티 게시글 실시간 렌더링 함수 (unshift와 동적 DOM 구현 핵심)
+        function renderPosts() {
+            let postHtml = '';
+            postsData.forEach((post, index) => {
+                let commentHtml = '';
+                post.comments.forEach(c => {
+                    commentHtml += `<div class="comment-item"><span>💬</span>${c}</div>`;
+                });
+
+                postHtml += `
+                    <div class="post-card">
+                        <div class="post-meta">익명유저 • ${index + 1}분 전 • 소통 ${post.comments.length}개</div>
+                        <div class="post-title">${post.title}</div>
+                        <div class="post-desc">${post.desc}</div>
+                        
+                        <div class="comment-btn" onclick="toggleComments(${index})">💬 댓글 확인 및 작성 (${post.comments.length})</div>
+                        
+                        <div class="comment-section" id="cSection-${index}" style="display: none;">
+                            <div id="cList-${index}">${commentHtml}</div>
+                            <div class="comment-form">
+                                <input type="text" id="cInput-${index}" class="comment-input" placeholder="따뜻하고 유쾌한 익명 댓글을 남겨보세요">
+                                <button class="comment-submit" onclick="addComment(${index})">등록</button>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+            document.getElementById('postContainer').innerHTML = postHtml;
+        }
+
+        // 새 게시글 실시간 작성 기능 (unshift 사용으로 맨 위에 즉시 갱신)
+        function addPost() {
+            const title = document.getElementById('newTitle').value;
+            const desc = document.getElementById('newDesc').value;
+            if(!title || !desc) { alert('제목과 내용을 적어주세요옹!'); return; }
+
+            postsData.unshift({
+                title: "🔥 " + title,
+                desc: desc,
+                comments: ["실시간반응봇🤖: 우와! 유저님이 실시간으로 올려주신 생생한 이야기네요!"]
+            });
+
+            document.getElementById('newTitle').value = '';
+            document.getElementById('newDesc').value = '';
+            renderPosts();
+            alert('내가 작성한 실제 글이 실시간 익명 광장에 즉시 반영되었습니다!');
+        }
+
+        function toggleComments(index) {
+            const target = document.getElementById(`cSection-${index}`);
+            target.style.display = target.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // 실시간 댓글 작성 및 동적 바인딩
+        function addComment(index) {
+            const input = document.getElementById(`cInput-${index}`);
+            if(!input.value) { alert('댓글 내용을 적어주세요옹!'); return; }
+            
+            postsData[index].comments.push("익명(나): " + input.value);
+            input.value = '';
+            renderPosts();
+            
+            // 유저가 방금 보고 있던 댓글 영역은 열린 상태로 유지
+            document.getElementById(`cSection-${index}`).style.display = 'block';
+        }
+
+        // 모달창 팝업 제어
+        function openModal() { document.getElementById('testModal').style.display = 'flex'; }
+        function closeModal() { 
+            document.getElementById('testModal').style.display = 'none'; 
+            alert('가치관 매칭 엔진 분석 완료! 유저님의 성향에 맞춰 기업 리스트 추천 가중치가 동적으로 적용되었습니다.');
+        }
+
+        // 최초 데이터 로드 실행
+        renderPosts();
     </script>
 </body>
 </html>
