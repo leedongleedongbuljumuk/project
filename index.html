@@ -29,12 +29,12 @@
             align-items: center;
         }
 
-        /* 상단 바 */
+        /* 상단 네비게이션 메인 메뉴바 */
         .navbar {
             width: 100%;
             background-color: var(--card-white);
-            border-bottom: 2px solid var(--text-dark);
-            padding: 1rem 2rem;
+            border-bottom: 3px solid var(--text-dark);
+            padding: 0.5rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -42,8 +42,27 @@
             top: 0;
             z-index: 999;
         }
-        .logo { font-size: 1.6rem; font-weight: bold; color: var(--text-dark); }
+        .logo { font-size: 1.6rem; font-weight: bold; color: var(--text-dark); cursor: pointer; }
         .logo span { color: var(--main-color); }
+        
+        /* [요구사항 반영] 3대 핵심 메뉴 탭 */
+        .nav-menu { display: flex; gap: 10px; }
+        .menu-btn {
+            background: none;
+            border: 2px solid transparent;
+            padding: 8px 16px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 10px;
+            color: var(--text-dark);
+            transition: 0.2s;
+        }
+        .menu-btn.active {
+            background-color: var(--yellow-point);
+            border-color: var(--text-dark);
+            box-shadow: 2px 2px 0px var(--text-dark);
+        }
 
         /* 메인 레이아웃 */
         .container {
@@ -55,62 +74,82 @@
             gap: 2rem;
         }
 
+        /* 동적 탭 컨텐츠 영역 */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
         /* 매칭 배너 */
         .banner {
-            grid-column: 1 / -1;
             background-color: #fff0ea;
             border: 3px solid var(--text-dark);
             border-radius: 18px;
-            padding: 2rem;
-            box-shadow: 6px 6px 0px var(--text-dark);
+            padding: 1.5rem;
+            box-shadow: 5px 5px 0px var(--text-dark);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 2rem;
         }
-        .banner-title { font-size: 1.4rem; font-weight: bold; margin-bottom: 0.5rem; }
-        .banner-btn {
-            background-color: var(--main-color);
-            color: white;
-            border: 2px solid var(--text-dark);
-            padding: 0.8rem 1.5rem;
-            border-radius: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 3px 3px 0px var(--text-dark);
-            transition: 0.1s;
-        }
-        .banner-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px var(--text-dark); }
+        .banner-title { font-size: 1.3rem; font-weight: bold; margin-bottom: 0.3rem; }
 
         .section-title {
             font-size: 1.3rem;
             font-weight: bold;
-            margin: 1.5rem 0 1rem 0;
+            margin: 0rem 0 1rem 0;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        /* 기업 리스트 카드 구조 */
-        .company-grid {
+        /* 일자리 리스트 카드 스타일 */
+        .job-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1.2rem;
         }
-        .company-card {
+        .job-card {
             background: var(--card-white);
             border: 2px solid var(--text-dark);
             border-radius: 14px;
             padding: 1.2rem;
             box-shadow: 4px 4px 0px var(--text-dark);
-            transition: 0.2s;
+            position: relative;
         }
-        .company-card:hover { transform: translateY(-2px); }
-        .company-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+        .job-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+        .loc-badge { background: #e0f2fe; color: #0369a1; border: 1px solid #0369a1; padding: 2px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; }
         .match-badge { background: #effaf6; color: #258764; border: 1px solid #258764; padding: 2px 8px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
-        .company-tag { display: inline-block; background: #f1f5f9; color: var(--text-gray); padding: 2px 6px; border-radius: 6px; font-size: 0.75rem; margin-right: 4px; }
-        .company-review { margin-top: 0.8rem; font-size: 0.85rem; background: #fafafa; padding: 8px; border-radius: 8px; border-left: 3px solid var(--sub-color); }
+        .job-tag { display: inline-block; background: #f1f5f9; color: var(--text-gray); padding: 2px 6px; border-radius: 6px; font-size: 0.75rem; margin-right: 4px; margin-top: 4px; }
+        .job-desc { margin-top: 0.8rem; font-size: 0.85rem; background: #fafafa; padding: 8px; border-radius: 8px; border-left: 3px solid var(--sub-color); }
 
-        /* 익명 광장 입력 폼 */
+        /* [요구사항 반영] 사장님 일자리 올리기 입력 폼 패널 */
+        .owner-form-box {
+            background: var(--card-white);
+            border: 3px solid var(--text-dark);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 6px 6px 0px var(--text-dark);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 0.4rem; font-size: 0.95rem; }
+        .form-input, .form-select, .form-textarea { width: 100%; border: 2px solid var(--text-dark); padding: 0.7rem; border-radius: 8px; font-size: 0.9rem; }
+        .form-textarea { min-height: 100px; resize: none; }
+        .submit-btn {
+            width: 100%;
+            background-color: var(--main-color);
+            color: white;
+            border: 2px solid var(--text-dark);
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 3px 3px 0px var(--text-dark);
+        }
+        .submit-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px var(--text-dark); }
+
+        /* 익명 광장 스타일 */
         .write-box {
             background: var(--card-white);
             border: 2px solid var(--text-dark);
@@ -119,117 +158,148 @@
             box-shadow: 4px 4px 0px var(--text-dark);
             margin-bottom: 1.5rem;
         }
-        .write-input, .write-textarea { width: 100%; border: 2px solid var(--text-dark); padding: 0.7rem; border-radius: 8px; margin-bottom: 0.6rem; font-size: 0.9rem; }
-        .write-textarea { min-height: 90px; resize: none; }
-        .write-btn {
-            background-color: var(--sub-color);
-            color: var(--text-dark);
-            border: 2px solid var(--text-dark);
-            padding: 0.5rem 1.2rem;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            float: right;
-            box-shadow: 2px 2px 0px var(--text-dark);
-        }
-
-        /* 익명 게시글 */
-        .post-list { display: flex; flex-direction: column; gap: 1rem; }
         .post-card {
             background: var(--card-white);
             border: 2px solid var(--text-dark);
             border-radius: 14px;
             padding: 1.2rem;
             box-shadow: 4px 4px 0px var(--text-dark);
+            margin-bottom: 1rem;
         }
-        .post-meta { font-size: 0.8rem; color: var(--text-gray); margin-bottom: 0.5rem; }
-        .post-title { font-size: 1.05rem; font-weight: bold; margin-bottom: 0.5rem; }
-        .post-desc { font-size: 0.9rem; color: #4a5568; line-height: 1.5; margin-bottom: 0.8rem; }
         
-        /* 1:N 대댓글 구조 */
         .comment-toggle { font-size: 0.8rem; color: var(--main-color); font-weight: bold; cursor: pointer; background: #fff5f2; padding: 4px 10px; border-radius: 6px; display: inline-block; }
         .comment-box { margin-top: 0.8rem; border-top: 2px dashed var(--border-light); padding-top: 0.8rem; display: none; }
-        .comment-item { background: #f8fafc; padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 4px; border: 1px solid var(--border-light); }
-        .comment-item span { font-weight: bold; color: var(--main-color); margin-right: 6px; }
-        .comment-form { display: flex; gap: 0.5rem; margin-top: 0.6rem; }
-        .comment-input { flex-grow: 1; border: 2px solid var(--text-dark); padding: 0.4rem; border-radius: 6px; font-size: 0.85rem; }
-        .comment-submit { background: var(--text-dark); color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: bold; }
+        .comment-item { background: #f8fafc; padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 4px; }
 
         /* 우측 사이드바 인기 순위 */
-        .sidebar { background: var(--card-white); border: 2px solid var(--text-dark); border-radius: 14px; padding: 1.2rem; box-shadow: 4px 4px 0px var(--text-dark); height: fit-content; position: sticky; top: 90px; }
+        .sidebar { background: var(--card-white); border: 2px solid var(--text-dark); border-radius: 14px; padding: 1.2rem; box-shadow: 4px 4px 0px var(--text-dark); height: fit-content; }
         .rank-item { display: flex; align-items: center; padding: 0.6rem 0; border-bottom: 1px dashed var(--border-light); }
         .rank-number { font-weight: bold; color: var(--main-color); width: 25px; font-size: 1.1rem; }
-        
-        /* 모달창 */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); justify-content: center; align-items: center; z-index: 9999; }
-        .modal-content { background-color: #fffdf9; border: 3px solid var(--text-dark); padding: 2rem; border-radius: 16px; width: 90%; max-width: 450px; text-align: center; box-shadow: 8px 8px 0px var(--text-dark); }
-        .modal-option { display: block; text-align: left; margin: 0.8rem 0; font-size: 0.95rem; cursor: pointer; }
-        .modal-btn { background: var(--text-dark); color: white; border: none; padding: 0.6rem 1.5rem; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 1rem; }
     </style>
 </head>
 <body>
 
+    <!-- 상단 글로벌 네비게이션 메뉴바 -->
     <div class="navbar">
-        <div class="logo">🚀 <span>Career</span>Bridge</div>
-        <div style="font-weight: bold; font-size: 0.9rem; background: var(--yellow-point); padding: 4px 12px; border-radius: 20px; border: 2px solid var(--text-dark);">실시간 생태계 시연 버젼</div>
+        <div class="logo" onclick="switchTab('search')">🚀 <span>Career</span>Bridge</div>
+        
+        <!-- 핵심 3대 기능 탭 버튼 메뉴 -->
+        <div class="nav-menu">
+            <button class="menu-btn active" id="btn-search" onclick="switchTab('search')">🔍 일자리 찾기</button>
+            <button class="menu-btn" id="btn-town" onclick="switchTab('town')">📍 우리동네 일자리</button>
+            <button class="menu-btn" id="btn-post" onclick="switchTab('post')">✍️ 사장님 일자리 올리기</button>
+            <button class="menu-btn" id="btn-community" onclick="switchTab('community')">🔥 익명 소통 광장</button>
+        </div>
+
+        <div style="font-weight: bold; font-size: 0.85rem; background: var(--yellow-point); padding: 4px 12px; border-radius: 20px; border: 2px solid var(--text-dark);">데이터 연동 실시간 플랫폼</div>
     </div>
 
     <div class="container">
-        <!-- 상단 가치관 진단 배너 -->
-        <div class="banner">
-            <div>
-                <div class="banner-title">내 성향에 딱 맞는 진짜 숨은 알짜회사 찾기 🧩</div>
-                <p style="font-size: 0.9rem; color: var(--text-gray);">간단한 핵심 가치관 선택으로 나와 맞는 회사 매칭율을 실시간 계산합니다.</p>
-            </div>
-            <button class="banner-btn" onclick="toggleModal(true)">성향 분석</button>
-        </div>
-
-        <!-- 좌측 영역 (기업 정보 + 커뮤니티) -->
+        <!-- 좌측 메인 스페이스 -->
         <div>
-            <!-- [기능 요구 반영] 40개 전체 알짜 기업 정보 로드 공간 -->
-            <div class="section-title">🏢 청년들이 인정한 알짜배기 기업 정보 (40개 전체)</div>
-            <div class="company-grid" id="companyGrid"></div>
-
-            <!-- [기능 요구 반영] 30개 커뮤니티 데이터 상호작용 공간 -->
-            <div class="section-title" style="margin-top: 2.5rem;">🔥 선배들의 생생한 익명 광장 (30개 활성 중)</div>
             
-            <!-- 실시간 동적 등록 폼 -->
-            <div class="write-box">
-                <input type="text" id="inputTitle" class="write-input" placeholder="제목을 적어주세요 (예: 오늘 면접 다 부수고 온 썰)">
-                <textarea id="inputDesc" class="write-textarea" placeholder="선배들에게 물어보고 싶은 사내 분위기, 면접 후기, 혹은 재미있는 에피소드를 자유롭게 적어보세요!"></textarea>
-                <button class="write-btn" onclick="createNewPost()">실시간 광장에 글 올리기</button>
-                <div style="clear: both;"></div>
+            <!-- ==========================================
+                 TAB 1: 일자리 찾기 화면
+                 ========================================== -->
+            <div id="content-search" class="tab-content active">
+                <div class="banner">
+                    <div>
+                        <div class="banner-title">맞춤형 가치관 일자리 매칭 🧩</div>
+                        <p style="font-size: 0.9rem; color: var(--text-gray);">40개의 알짜배기 중소·강소기업 리스트가 청년 유저들을 기다립니다.</p>
+                    </div>
+                </div>
+                <div class="section-title">🏢 전체 일자리 목록 (40개 기본 내장 + 사장님 추가 연동)</div>
+                <div class="job-grid" id="allJobGrid"></div>
             </div>
 
-            <!-- 게시글 리스트 -->
-            <div class="post-list" id="postList"></div>
+            <!-- ==========================================
+                 TAB 2: 우리동네 일자리 화면 (지역 기반 필터링)
+                 ========================================== -->
+            <div id="content-town" class="tab-content">
+                <div class="banner" style="background-color: #e0f2fe; border-color: #0369a1;">
+                    <div>
+                        <div class="banner-title" style="color: #0369a1;">📍 우리동네 가까운 일자리 찾기</div>
+                        <p style="font-size: 0.9rem; color: #0369a1;">가까운 거리에 위치한 소중한 알짜 직장 정보만 모아서 보여드립니다.</p>
+                    </div>
+                </div>
+                <div class="section-title">🗺️ 근거리 매칭 동네 일자리 리스트</div>
+                <div class="job-grid" id="townJobGrid"></div>
+            </div>
+
+            <!-- ==========================================
+                 TAB 3: 사장님 일자리 올리기 화면
+                 ========================================== -->
+            <div id="content-post" class="tab-content">
+                <div class="owner-form-box">
+                    <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; text-align: center; color: var(--main-color);">📢 구인 공고 실시간 무료 등록</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-gray); text-align: center; margin-bottom: 1.5rem;">가치관이 맞는 청년 인재를 매칭하기 위해 회사의 내부 환경을 솔직하게 작성해주세요.</p>
+                    
+                    <div class="form-group">
+                        <label>🏢 회사 이름</label>
+                        <input type="text" id="formCompName" class="form-input" placeholder="예: (주)이노베이션웍스">
+                    </div>
+                    <div class="form-group">
+                        <label>📍 근무 지역 (동네 선택)</label>
+                        <select id="formLocation" class="form-select">
+                            <option value="강남구">서울특별시 강남구</option>
+                            <option value="마포구">서울특별시 마포구</option>
+                            <option value="영등포구">서울특별시 영등포구</option>
+                            <option value="분당구">경기도 성남시 분당구</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>✨ 사내 핵심 강점 키워드</label>
+                        <select id="formTag" class="form-select">
+                            <option value="워라밸최고, 칼퇴보장">#워라밸최고 #칼퇴보장</option>
+                            <option value="수평문화, 직급없음">#수평문화 #직급없음</option>
+                            <option value="인센티브확실, 고연봉">#인센티브확실 #고연봉</option>
+                            <option value="자유로운연차, 복지최상">#자유로운연차 #복지최상</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>💬 한 줄 사내 복지 및 한줄평 후기</label>
+                        <textarea id="formReview" class="form-textarea" placeholder="예: 야근 절대 강요하지 않으며 자유롭게 의견을 나누는 수평적 조직 문화를 지향합니다."></textarea>
+                    </div>
+                    <button class="submit-btn" onclick="registerJobByOwner()">공고 실시간 등록하기</button>
+                </div>
+            </div>
+
+            <!-- ==========================================
+                 TAB 4: 기존 익명 소통 광장 화면
+                 ========================================== -->
+            <div id="content-community" class="tab-content">
+                <div class="write-box">
+                    <h4 style="margin-bottom: 0.5rem; color: var(--main-color);">✍️ 익명 자유 소통 보드</h4>
+                    <input type="text" id="inputTitle" style="width:100%; border:2px solid var(--text-dark); padding:0.6rem; border-radius:8px; margin-bottom:0.5rem;" placeholder="제목을 적어주세요">
+                    <textarea id="inputDesc" style="width:100%; border:2px solid var(--text-dark); padding:0.6rem; border-radius:8px; margin-bottom:0.5rem; min-height:80px; resize:none;" placeholder="자유로운 취준 고민이나 에피소드를 적어보세요."></textarea>
+                    <button style="background:var(--sub-color); color:var(--text-dark); font-weight:bold; border:2px solid var(--text-dark); padding:6px 16px; border-radius:6px; float:right; cursor:pointer;" onclick="createNewPost()">글 등록</button>
+                    <div style="clear: both;"></div>
+                </div>
+                <div id="postList"></div>
+            </div>
+
         </div>
 
-        <!-- 우측 사이드바 영역 -->
+        <!-- 우측 사이드바 인기 실시간 영역 -->
         <div>
             <div class="sidebar">
-                <h3 style="font-size: 1.1rem; margin-bottom: 1rem; border-bottom: 2px solid var(--text-dark); padding-bottom: 0.5rem;">👑 오늘의 인기 알짜회사 TOP 10</h3>
+                <h3 style="font-size: 1.1rem; margin-bottom: 1rem; border-bottom: 2px solid var(--text-dark); padding-bottom: 0.5rem;">👑 실시간 인기 알짜회사 TOP 10</h3>
                 <div id="topTenRank"></div>
             </div>
         </div>
     </div>
 
-    <!-- 모달창 정의 -->
-    <div class="modal" id="valModal">
-        <div class="modal-content">
-            <h3 style="margin-bottom: 0.5rem; color: var(--main-color);">🎯 내 핵심 가치관 진단</h3>
-            <p style="font-size: 0.85rem; color: var(--text-gray); margin-bottom: 1rem;">가장 중요하게 생각하는 직장 조건을 골라보세요!</p>
-            <label class="modal-option"><input type="radio" name="vCheck" checked> 눈치 안 보고 정시 칼퇴! 확실한 워라밸</label>
-            <label class="modal-option"><input type="radio" name="vCheck"> 님/닉네임 호칭 쓰는 수평적인 사내 문화</label>
-            <label class="modal-option"><input type="radio" name="vCheck"> 성과에 따른 확실한 보상과 탄탄한 초봉</label>
-            <button class="modal-btn" onclick="applyMatching()">매칭 엔진 작동</button>
-        </div>
-    </div>
-
     <script>
-        // ==========================================
-        // 데이터 빌딩: 40개 고유 강소기업 정보 인공 배열 생성
-        // ==========================================
+        // 1. 탭 전환 제어 시스템
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(`content-${tabName}`).classList.add('active');
+            document.getElementById(`btn-${tabName}`).classList.add('active');
+        }
+
+        // 2. 데이터 빌딩: 40개 기초 강소기업 리스트 셋팅
         const compNames = [
             "네오소프트웨어", "그린텍인터", "브이원랩", "퓨처웨이브", "인포시스텍", "소프트마이닝", "클라우드브릭", "디지털하이브", 
             "엔터프라이즈X", "모빌리티온", "에듀테크랩", "바이오시너지", "핀테크인사이트", "넥스트커머스", "스마트팩토리", "에코네트워크",
@@ -237,24 +307,88 @@
             "유니버스소프", "딥비전텍", "퀀트투자랩", "플랫폼베이스", "아이디어가든", "코드스미스", "웹디자인하우스", "게임크래프트",
             "알고리즘웍스", "오픈소스넷", "지오테크놀로지", "퀀텀소프트", "제트소프트", "맥스레이팅", "시너지파트너", "파이오니어랩"
         ];
-        const tags = [["#워라밸최고", "#칼퇴보장"], ["#수평문화", "#님호칭"], ["#도서비지원", "#성장중심"], ["#보너스탄탄", "#간식무제한"]];
-        const baseReviews = ["야근 절대 안 시키고 개인 라이프를 존중해 주는 천사 같은 곳입니다.", "직급 상관없이 아이디어 낼 수 있는 완전 유연한 스타트업 문화!", "프로젝트 빡세게 굴리지만 성과급 정산은 제대로 해 줍니다.", "매주 금요일 패밀리데이 조기 퇴근 혜택이 진짜 달콤합니다.", "연봉 인상률 높고 복지에 진심인 강소기업입니다."];
+        const locations = ["강남구", "마포구", "영등포구", "분당구"];
+        const jobTags = [["#워라밸최고", "#칼퇴보장"], ["#수평문화", "#직급없음"], ["#성장인프라", "#도서비지원"], ["#보상확실", "#인센티브제"]];
+        const baseReviews = ["야근이 진짜 거의 없고 개인 생활 철저히 보장해줍니다.", "수평적으로 호칭 부르고 인턴 의견도 적극 반영돼요.", "일은 좀 빡세도 배울 점이 너무 많고 확실히 성장합니다.", "상사 눈치 안 보고 연차 프리하게 내서 쓸 수 있음.", "회사 연봉 인상률 높고 복리후생 시설이 최고 수준!"];
 
-        let compHtml = '';
+        // 동적 연동을 위한 통합 데이터 배열 객체 구축
+        let jobDatabase = [];
         for(let i=0; i<40; i++) {
-            compHtml += `
-                <div class="company-card">
-                    <div class="company-info">
-                        <strong>(주)${compNames[i]}</strong>
-                        <span class="match-badge">매칭율 ${98 - (i%12)}%</span>
-                    </div>
-                    <div><span class="company-tag">${tags[i%4][0]}</span><span class="company-tag">${tags[i%4][1]}</span></div>
-                    <div class="company-review">💬 "${baseReviews[i%5]}"</div>
-                </div>`;
+            jobDatabase.push({
+                name: "(주)" + compNames[i],
+                location: locations[i % 4],
+                tags: jobTags[i % 4],
+                review: baseReviews[i % 5],
+                matchingRate: 98 - (i % 12)
+            });
         }
-        document.getElementById('companyGrid').innerHTML = compHtml;
 
-        // TOP 10 사이드바 구성
+        // 일자리 리스트 출력 화면 렌더러 함수
+        function renderJobs() {
+            let allGridHtml = '';
+            let townGridHtml = '';
+
+            jobDatabase.forEach(job => {
+                let cardTemplate = `
+                    <div class="job-card">
+                        <div class="job-info">
+                            <strong>${job.name}</strong>
+                            <span class="match-badge">매칭율 ${job.matchingRate}%</span>
+                        </div>
+                        <div>
+                            <span class="loc-badge">📍 서울/경기 ${job.location}</span>
+                            <span class="job-tag">${job.tags[0]}</span>
+                            <span class="job-tag">${job.tags[1]}</span>
+                        </div>
+                        <div class="job-desc">💬 "${job.review}"</div>
+                    </div>`;
+                
+                // [일자리 찾기] 리스트에 가중치 배치
+                allGridHtml += cardTemplate;
+
+                // [우리동네 일자리] 리스트에는 특정 동네 매칭 필터 시뮬레이션 (마포구/강남구 기준 매핑)
+                if(job.location === "강남구" || job.location === "마포구") {
+                    townGridHtml += cardTemplate;
+                }
+            });
+
+            document.getElementById('allJobGrid').innerHTML = allGridHtml;
+            document.getElementById('townJobGrid').innerHTML = townGridHtml;
+        }
+
+        // [핵심 연동 기술] 사장님 일자리 등록 함수 -> 데이터베이스 주입 후 일자리 탭 실시간 갱신
+        function registerJobByOwner() {
+            const compName = document.getElementById('formCompName').value;
+            const location = document.getElementById('formLocation').value;
+            const tagVal = document.getElementById('formTag').value.split(', ');
+            const review = document.getElementById('formReview').value;
+
+            if(!compName || !review) {
+                alert('💡 사장님! 회사 이름과 한줄평 복지 내용을 정확히 작성해주세요옹!');
+                return;
+            }
+
+            // 새로운 일자리 데이터를 최상단 객체 구조에 unshift
+            jobDatabase.unshift({
+                name: compName,
+                location: location,
+                tags: [`#${tagVal[0]}`, `#${tagVal[1]}`],
+                review: review,
+                matchingRate: 99 // 신규 공고 우선 매칭율 가중치
+            });
+
+            // 데이터 동기화 갱신
+            renderJobs();
+
+            // 폼 필드 초기화
+            document.getElementById('formCompName').value = '';
+            document.getElementById('formReview').value = '';
+
+            alert('🎉 구인 공고가 성공적으로 서버에 업로드되었습니다! [일자리 찾기] 및 [우리동네 일자리] 메뉴로 이동하시면 등록된 공고를 실시간 즉시 확인할 수 있습니다!');
+            switchTab('search'); // 등록 즉시 메인 화면으로 이동시켜 검증 시각화
+        }
+
+        // 우측 TOP 10 렌더러
         let rankHtml = '';
         for(let i=0; i<10; i++) {
             rankHtml += `
@@ -266,96 +400,49 @@
         }
         document.getElementById('topTenRank').innerHTML = rankHtml;
 
-        // ==========================================
-        // 데이터 빌딩: 30개 커뮤니티 실제 데이터 배열화
-        // ==========================================
+        // 30개 커뮤니티 데이터셋 구성
         let posts = [
-            {
-                title: "🤣 중소 강소기업 면접 레전드 썰 푼다 ㅋㅋㅋ",
-                desc: "면접관이 '우린 야근이 좀 있을 수 있는데 버틸 수 있냐'고 묻길래, 내가 너무 당당하게 '네! 어차피 집에 있어 봤자 심심해서 회사 복지 에어컨 쐬러 맨날 출근하고 싶었습니다!' 했더니 면접관 아저씨 빵 터져서 당일 합격 통보받음 ㅋㅋㅋ 나 졸지에 에어컨 도둑 됨.",
-                comments: ["익명선배: 님 내일부터 탕비실 에어컨 온도조절 관리자 확정임 ㅋㅋㅋ", "취준생: 멘트 미쳤네 다음 면접 때 벤치마킹한다"]
-            },
-            {
-                title: "🤦‍♂️ 첫 출근 날 빌런 등극했다.. 퇴사해야 되냐?",
-                desc: "탕비실 냉장고에 엄청 맛있는 특제 탕수육 소스가 통에 담겨있길래 공용인 줄 알고 탕수육 배달 시켜서 다 털어 먹었거든? 근데 알고 보니까 대표님이 집에서 개인용으로 가져온 소스였음... 사장님이 싹 비워진 통 보시고 허탈하게 웃고 가셨는데 이거 사표 써야 됨??",
-                comments: ["선배1: 사장님 속으로 울고 계신다 ㅋㅋㅋ 당장 마트 가서 비싼 걸로 사다 놔라", "익명유저: 첫날부터 눈도장 하나는 완벽하게 찍었네 ㅋㅋㅋ 힘내라"]
-            }
+            { title: "🤣 중소 강소기업 면접 레전드 썰 푼다 ㅋㅋㅋ", desc: "면접관이 야근 물어보길래 회사 에어컨 쐬러 맨날 오고 싶다 하니까 빵 터져서 당일 합격함 ㅋㅋㅋ", comments: ["익명선배: 에어컨 조절기 마스터 등극 축하", "취준생: 대단하네"] },
+            { title: "🤦‍♂️ 첫 출근 날 탕수육 빌런 등극했다..", desc: "탕비실 냉장고 공용 소스인 줄 알고 부어 먹었는데 사장님 개인 특제 소스였음 어떡함?", comments: ["선배1: 사장님 눈물 흘리는 중 ㅋㅋㅋ"] }
         ];
-
         const postTitles = [
-            "회사 면접 보러 갔는데 사장님네 댕댕이가 마중 나온 썰", "월급 280 집 앞 5분거리 vs 월급 380 왕복 3시간 대기업",
-            "자유 복장 회사면 진짜로 슬리퍼 신고 출근해도 됨?", "면접관 분위기 싸하면 무조건 거르라는 조상님들의 법칙",
-            "내 가치관(워라밸) 맞춰 이직했더니 만성 피로 사라진 후기", "자소서 쓸 때 '열정'이랑 '노력' 단어 빼고 쓰는 방법",
-            "강소기업 평점 사이트 리뷰 점수 어디까지 신뢰해야 됨?", "인턴 3개월 하면서 느낀 중소기업의 뜻밖의 개이득 장점",
-            "첫 직장 간판이 내 커리어 패스에 주는 진짜 영향력", "포트폴리오 디자인 똥손도 예쁘게 구합하는 개꿀팁 공유",
-            "야근 수당 떼먹는 악덕 블랙기업 미리 필터링하는 요령", "취준 길어지니까 멘탈 바사삭 부서지는데 팁 공유 좀 해줘",
-            "지방러 서울 상경해서 취업하면 월세 내고 진짜 남는 돈 있음?", "동아리 회장 했던 썰 자소서에 맛깔나게 포장하는 알고리즘",
-            "오늘 면접 압박 질문 받고 어버버하다가 털린 슬픈 밤이다", "회사 화장실 위생 상태가 회사의 진짜 복지 척도라는 생각",
-            "연봉 협상할 때 당차게 지르려다가 어버버 밀당 실패한 썰", "결국 돈보다 같이 일하는 사수나 팀원이 좋아야 오래 버팀",
-            "출근 첫날 백팩 매고 가야 됨 크로스백 매고 가야 됨?", "여기 가치관 검사 돌렸는데 소름 돋게 내 진짜 조건 나옴",
-            "비전공자 국비 학원 수료하고 개발자 취업한 현실 조언", "사무실이 너무 절간처럼 조용해서 타자 치기도 눈치 보임",
-            "회사 복지 혜택 중에서 무제한 스낵바 있으면 진짜 체감 큼?", "이력서 사진 포토샵 과하게 하면 면접관이 알아봄?",
-            "팀장님이 일 안 하는 전형적인 월급 루팡일 때 대처법", "재택근무 몇 달 맛보니까 매일 아침 지옥철 탈 자신이 없다",
-            "면접 마지막에 질문 있냐고 할 때 센스 있게 되묻는 멘트", "강소기업 구인 공고 중에서 진짜 보석 같은 기업 고르는 법"
+            "회사 면접 보러 갔는데 강아지 있던 썰", "월급 280 집 앞 5분 vs 월급 380 대기업 왕복 3시간", "자유 복장 회사면 진짜 추리닝 입어도 됨?", "면접장 분위기 싸하면 거르라는 조상님의 법칙",
+            "내 가치관 맞춰 이직하니 만성피로 완치", "자소서에 열정이란 단어 안 쓰고 통과하는 알고리즘", "강소기업 평점 사이트 점수 신뢰도 수준", "인턴 하면서 느낀 작지만 강한 강소기업 장점",
+            "첫 직장 간판이 커리어 패스에 주는 영향", "포트폴리오 예쁘게 구합하는 개꿀팁 공유", "블랙기업 미리 필터링하는 나만의 요령", "취준 길어지니 멘탈 흔들리는데 다들 어떰?",
+            "지방러 서울 취업하면 월세 떼고 남는 돈", "동아리 활동 자소서에 포장하는 기술", "오늘 압박 면접 질문 들어와서 어버버 털렸다", "화장실 위생이 회사의 진짜 복지 수준임",
+            "연봉 협상 밀당 대차게 말아먹은 썰", "결국 돈보다 같이 일하는 사람이 최고다", "출근 첫날 백팩 매고 가야 됨?", "여기 가치관 검사 돌려봤는데 소름 돋음",
+            "비전공자 개발자 취업 현실 조언해 줌", "사무실 너무 조용해서 숨 막힌다", "회사 복지 중 무제한 스낵바 체감 크냐?", "이력서 사진 포토샵 과하면 탈락 사유?",
+            "팀장이 일 안 하는 루팡일 때 대처 요령", "재택근무 하다가 매일 출근하려니 지옥이다", "면접 마지막 역질문 시간에 던지기 좋은 멘트", "구인공고 중 진짜 숨겨진 옥석 가리기"
         ];
+        postTitles.forEach(t => posts.push({ title: t, desc: "커리어브릿지 실시간 피드 본문입니다. 청년들의 행복한 취업 매칭 생태계를 응원합니다!", comments: ["공감합니다!", "좋은 정보 고마워요."] }));
 
-        postTitles.forEach((t) => {
-            posts.push({
-                title: t,
-                desc: "현직 선배들과 구직 청년들이 주도적으로 채워가는 커리어브릿지 실시간 소통 피드입니다. 솔직하고 유쾌한 대화를 주고받으며 깜빡임 없는 소통을 누려보세요. 대한민국 취준생 파이팅!",
-                comments: ["익명선배: 격하게 공감합니다! 화이팅이에요.", "구직러: 힘이 되는 글이네요 감사해요."]
-            });
-        });
-
-        // ==========================================
-        // 동적 렌더링 및 UI 처리 엔진
-        // ==========================================
         function renderPosts() {
             let postHtml = '';
             posts.forEach((post, index) => {
                 let commentHtml = '';
-                post.comments.forEach(c => {
-                    commentHtml += `<div class="comment-item"><span>💬</span>${c}</div>`;
-                });
-
+                post.comments.forEach(c => commentHtml += `<div class="comment-item">💬 ${c}</div>`);
                 postHtml += `
                     <div class="post-card">
-                        <div class="post-meta">익명회원 • ${index+1}분 전 • 토론 ${post.comments.length}개</div>
-                        <div class="post-title">${post.title}</div>
-                        <div class="post-desc">${post.desc}</div>
-                        
-                        <div class="comment-toggle" onclick="toggleCommentBox(${index})">💬 댓글 보기 및 작성 (${post.comments.length})</div>
-                        
+                        <div style="font-size:0.8rem; color:var(--text-gray); margin-bottom:0.4rem;">익명 • ${index+1}분 전</div>
+                        <div style="font-weight:bold; margin-bottom:0.4rem;">${post.title}</div>
+                        <div style="font-size:0.9rem; color:#4a5568; margin-bottom:0.6rem;">${post.desc}</div>
+                        <div class="comment-toggle" onclick="toggleCommentBox(${index})">💬 댓글 (${post.comments.length})</div>
                         <div class="comment-box" id="cBox-${index}">
-                            <div id="cList-${index}">${commentHtml}</div>
-                            <div class="comment-form">
-                                <input type="text" id="cInput-${index}" class="comment-input" placeholder="유쾌한 격려의 댓글을 달아주세요!">
-                                <button class="comment-submit" onclick="addComment(${index})">등록</button>
-                            </div>
+                            <div>${commentHtml}</div>
                         </div>
                     </div>`;
             });
             document.getElementById('postList').innerHTML = postHtml;
         }
 
-        // [핵심 기술: unshift 정렬 + 동적 DOM 부분 갱신]
         function createNewPost() {
             const title = document.getElementById('inputTitle').value;
             const desc = document.getElementById('inputDesc').value;
-            
-            if(!title || !desc) { alert('💡 제목과 내용을 입력해주세요옹!'); return; }
-
-            posts.unshift({
-                title: "🔥 " + title,
-                desc: desc,
-                comments: ["실시간반응봇🤖: 반갑습니다! 작성하신 글이 실시간 피드에 성공적으로 바인딩되었습니다."]
-            });
-
+            if(!title || !desc) return;
+            posts.unshift({ title: "🔥 " + title, desc: desc, comments: ["🤖 실시간 등록 피드백 완료!"] });
             document.getElementById('inputTitle').value = '';
             document.getElementById('inputDesc').value = '';
-            
             renderPosts();
-            alert('성공! 페이지 전체 새로고침 없이, 자바스크립트 동적 DOM 기법으로 최상단 피드에 즉시 반영되었습니다.');
         }
 
         function toggleCommentBox(index) {
@@ -363,24 +450,8 @@
             box.style.display = box.style.display === 'none' ? 'block' : 'none';
         }
 
-        function addComment(index) {
-            const input = document.getElementById(`cInput-${index}`);
-            if(!input.value) { alert('댓글 내용을 적어주세요옹!'); return; }
-
-            posts[index].comments.push("나(익명): " + input.value);
-            input.value = '';
-            
-            renderPosts();
-            document.getElementById(`cBox-${index}`).style.display = 'block';
-        }
-
-        function toggleModal(show) { document.getElementById('valModal').style.display = show ? 'flex' : 'none'; }
-        function applyMatching() {
-            toggleModal(false);
-            alert('🚀 가치관 가중치 연산 엔진 가동 완료! 데이터베이스 기반 싱크로율이 실시간으로 재정렬되었습니다.');
-        }
-
-        // 앱 초기 가동
+        // 실행 초기화
+        renderJobs();
         renderPosts();
     </script>
 </body>
